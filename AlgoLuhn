@@ -1,0 +1,40 @@
+def calcul_chiffre(entree: int) -> int:
+    num: int = entree * 2
+    if num > 9:
+        num -= 9
+
+    return num
+
+
+def verification_luhn(entree: list, num) -> bool:
+    somme: int = sum(entree) % 10
+    print(f"{somme=}")
+    somme = 10 - somme
+    print(f"{somme=}, {num=}")
+    if somme == num:
+        return True
+
+    return False
+
+
+def saisie() -> str:
+    nums: str = input("Entrer les chiffres de votre carte banquaire")
+    nums: list[int, ...] = [int(num) for num in nums]
+    print(nums)
+    new_nums: list[int, ...] = list()
+    for i in range(len(nums)-1):
+        if i % 2 == 0:
+            new_nums.append(calcul_chiffre(nums[i]))
+        else:
+            new_nums.append(nums[i])
+
+    print(new_nums)
+
+    if verification_luhn(new_nums, nums[-1]):
+        return "Code bon"
+
+    return "Code Refuser"
+
+
+if __name__ == "__main__":
+    print(saisie())
